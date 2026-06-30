@@ -1,0 +1,446 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1859DBC3F032BC8D8D57F9AB /* Bucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F9264BD1B9BEB0B5661F2 /* Bucket.swift */; };
+		24BB09618E3FA7B488D91412 /* ExperimentsMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136E42F14D81ADBEA1EF109B /* ExperimentsMenuScene.swift */; };
+		2AE727E386FAB88DFB0B688A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309D63B8C5C65840644D5F12 /* GameScene.swift */; };
+		2B6A60EB2F643F8E6B40800B /* LevelSelectScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CFF09569E7B50EF2EEF3F2 /* LevelSelectScene.swift */; };
+		3881EE7ABCE02612DC16515B /* Trap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50780D2129DC73D2C67416AD /* Trap.swift */; };
+		38E90BBEB962C100D239333C /* LevelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC8CC5A725DB4DF2536B960 /* LevelConfig.swift */; };
+		3CAD93E83872870E40A327EA /* PegPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32AD5F2B37CC9A62E55057AC /* PegPattern.swift */; };
+		400885D51448D2B0F78076EF /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF000ADE027F6C09627AE83A /* PhysicsCategory.swift */; };
+		40C9B2A56D8C6CAF4A088646 /* PowerUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10DB57EBCA6FB080AF336658 /* PowerUp.swift */; };
+		45310FB842E842EBAFAB3D78 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B8BA3C8B9E80823C9BDCF0 /* Ball.swift */; };
+		6D5089660615EC3D9677F86B /* WorldBallSelectScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA9F1B7E53E07420FD048B5 /* WorldBallSelectScene.swift */; };
+		7FC648AA2A37CFDD8E5E5C02 /* LevelLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DFCFA6C665992E6C35F4C3 /* LevelLoader.swift */; };
+		9157CFB50CCEC4240396B4FA /* GravityWellLevelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF893CF34A0193C6355848CD /* GravityWellLevelConfig.swift */; };
+		9D72FC2BE2C0E7CB229CAD4C /* TempleTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B52DC1FEC2BB432A74BEA9 /* TempleTheme.swift */; };
+		A1502369F4F8EE350F03DBF6 /* Gate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7834246B50A0E8E60A6DAA /* Gate.swift */; };
+		A524FA673AF7E0663A399F16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D89FA352FCCDB1C6AA8D57DE /* UIKit.framework */; };
+		A7409DA5AFBD37CA03143136 /* levels.json in Resources */ = {isa = PBXBuildFile; fileRef = 1FBC437F7ABA09763DFB2AAC /* levels.json */; };
+		A8BE57A6F4D48E2FE6BAF604 /* GravityWellSelectScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74838FFD289C0F17F8C12188 /* GravityWellSelectScene.swift */; };
+		AFF825A843059C082F7570ED /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48EA1A6D503DF36F122111F /* MenuScene.swift */; };
+		BA2824BF48EDB0D5F750CB82 /* WorldBallScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3D33EABB247A587A121F02 /* WorldBallScene.swift */; };
+		C2768FB1EABFD3AD384E444B /* Peg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821038C82069B7F04179C4FB /* Peg.swift */; };
+		C43DF6F4DA04833FF90A8D52 /* WorldBallLevelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AF1490E5E737386A21F49 /* WorldBallLevelConfig.swift */; };
+		C8AB8DE11850E32AB8DD08CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBB17E6C336C061C59D88F7 /* AppDelegate.swift */; };
+		D25B07B44D26340ED61C56C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C6C79BD8320655D9605204B /* Foundation.framework */; };
+		D5D0D5ECFFDFD9FE8D8F35C9 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD970D1FC657C26110AFB8C /* GameViewController.swift */; };
+		D9A9EB3EA78753C2BF4DD243 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E39104358B22D514964843 /* SpriteKit.framework */; };
+		DE00B9C92B53FABDB3939C71 /* Effects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8F6C7242DDA04431C56002 /* Effects.swift */; };
+		E019EC0CAB149801B4AE6D6E /* BallType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCB92BCAED1D2DC66E4FFFD /* BallType.swift */; };
+		F44EAB82BE9FD5578AE130EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0FD750C182DED751B08488F /* Assets.xcassets */; };
+		F8F41B5702ED400064BD2655 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE5023561749C2F9109427 /* HUD.swift */; };
+		FC8D7CDC87A9D33B95301C88 /* GravityWellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D0BD3F52764654B80767FB /* GravityWellScene.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0EA9F1B7E53E07420FD048B5 /* WorldBallSelectScene.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WorldBallSelectScene.swift; sourceTree = "<group>"; };
+		10DB57EBCA6FB080AF336658 /* PowerUp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PowerUp.swift; sourceTree = "<group>"; };
+		136E42F14D81ADBEA1EF109B /* ExperimentsMenuScene.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExperimentsMenuScene.swift; sourceTree = "<group>"; };
+		16DFCFA6C665992E6C35F4C3 /* LevelLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LevelLoader.swift; sourceTree = "<group>"; };
+		1FBC437F7ABA09763DFB2AAC /* levels.json */ = {isa = PBXFileReference; includeInIndex = 1; path = levels.json; sourceTree = "<group>"; };
+		2A3D33EABB247A587A121F02 /* WorldBallScene.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WorldBallScene.swift; sourceTree = "<group>"; };
+		309D63B8C5C65840644D5F12 /* GameScene.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		32AD5F2B37CC9A62E55057AC /* PegPattern.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PegPattern.swift; sourceTree = "<group>"; };
+		3FD970D1FC657C26110AFB8C /* GameViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		44BE5023561749C2F9109427 /* HUD.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		4A5F9264BD1B9BEB0B5661F2 /* Bucket.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Bucket.swift; sourceTree = "<group>"; };
+		4EBB17E6C336C061C59D88F7 /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		50780D2129DC73D2C67416AD /* Trap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Trap.swift; sourceTree = "<group>"; };
+		53CFF09569E7B50EF2EEF3F2 /* LevelSelectScene.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LevelSelectScene.swift; sourceTree = "<group>"; };
+		59B52DC1FEC2BB432A74BEA9 /* TempleTheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TempleTheme.swift; sourceTree = "<group>"; };
+		6C8F6C7242DDA04431C56002 /* Effects.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Effects.swift; sourceTree = "<group>"; };
+		74838FFD289C0F17F8C12188 /* GravityWellSelectScene.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GravityWellSelectScene.swift; sourceTree = "<group>"; };
+		78B8BA3C8B9E80823C9BDCF0 /* Ball.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		7C6C79BD8320655D9605204B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		821038C82069B7F04179C4FB /* Peg.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Peg.swift; sourceTree = "<group>"; };
+		883AF1490E5E737386A21F49 /* WorldBallLevelConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WorldBallLevelConfig.swift; sourceTree = "<group>"; };
+		8EC8CC5A725DB4DF2536B960 /* LevelConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LevelConfig.swift; sourceTree = "<group>"; };
+		94D0BD3F52764654B80767FB /* GravityWellScene.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GravityWellScene.swift; sourceTree = "<group>"; };
+		AF000ADE027F6C09627AE83A /* PhysicsCategory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
+		AF7F47EB6418869B68AC251C /* Blinko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blinko.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDCB92BCAED1D2DC66E4FFFD /* BallType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BallType.swift; sourceTree = "<group>"; };
+		C2E39104358B22D514964843 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		D89FA352FCCDB1C6AA8D57DE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		DF893CF34A0193C6355848CD /* GravityWellLevelConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GravityWellLevelConfig.swift; sourceTree = "<group>"; };
+		E0FD750C182DED751B08488F /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E48EA1A6D503DF36F122111F /* MenuScene.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		F8AABDC74EABD45FA0033F00 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF7834246B50A0E8E60A6DAA /* Gate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Gate.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		04EBDD6176A6F2B8CE95488F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D25B07B44D26340ED61C56C2 /* Foundation.framework in Frameworks */,
+				D9A9EB3EA78753C2BF4DD243 /* SpriteKit.framework in Frameworks */,
+				A524FA673AF7E0663A399F16 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1B260940FDA3E63ACE71FDE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AF7F47EB6418869B68AC251C /* Blinko.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		34B5DCF6A2F4ED7C559FDDD6 = {
+			isa = PBXGroup;
+			children = (
+				1B260940FDA3E63ACE71FDE6 /* Products */,
+				E2FC430C5A3063BC93C5767C /* Frameworks */,
+				9AE01E5E518E5334493C14B0 /* Blinko */,
+			);
+			sourceTree = "<group>";
+		};
+		912BFD6FB60ED290259101A9 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				7C6C79BD8320655D9605204B /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		9AE01E5E518E5334493C14B0 /* Blinko */ = {
+			isa = PBXGroup;
+			children = (
+				4EBB17E6C336C061C59D88F7 /* AppDelegate.swift */,
+				78B8BA3C8B9E80823C9BDCF0 /* Ball.swift */,
+				BDCB92BCAED1D2DC66E4FFFD /* BallType.swift */,
+				4A5F9264BD1B9BEB0B5661F2 /* Bucket.swift */,
+				6C8F6C7242DDA04431C56002 /* Effects.swift */,
+				136E42F14D81ADBEA1EF109B /* ExperimentsMenuScene.swift */,
+				309D63B8C5C65840644D5F12 /* GameScene.swift */,
+				3FD970D1FC657C26110AFB8C /* GameViewController.swift */,
+				FF7834246B50A0E8E60A6DAA /* Gate.swift */,
+				DF893CF34A0193C6355848CD /* GravityWellLevelConfig.swift */,
+				94D0BD3F52764654B80767FB /* GravityWellScene.swift */,
+				74838FFD289C0F17F8C12188 /* GravityWellSelectScene.swift */,
+				44BE5023561749C2F9109427 /* HUD.swift */,
+				8EC8CC5A725DB4DF2536B960 /* LevelConfig.swift */,
+				16DFCFA6C665992E6C35F4C3 /* LevelLoader.swift */,
+				53CFF09569E7B50EF2EEF3F2 /* LevelSelectScene.swift */,
+				E48EA1A6D503DF36F122111F /* MenuScene.swift */,
+				821038C82069B7F04179C4FB /* Peg.swift */,
+				32AD5F2B37CC9A62E55057AC /* PegPattern.swift */,
+				AF000ADE027F6C09627AE83A /* PhysicsCategory.swift */,
+				10DB57EBCA6FB080AF336658 /* PowerUp.swift */,
+				59B52DC1FEC2BB432A74BEA9 /* TempleTheme.swift */,
+				50780D2129DC73D2C67416AD /* Trap.swift */,
+				883AF1490E5E737386A21F49 /* WorldBallLevelConfig.swift */,
+				2A3D33EABB247A587A121F02 /* WorldBallScene.swift */,
+				0EA9F1B7E53E07420FD048B5 /* WorldBallSelectScene.swift */,
+				F8AABDC74EABD45FA0033F00 /* Info.plist */,
+				1FBC437F7ABA09763DFB2AAC /* levels.json */,
+				E0FD750C182DED751B08488F /* Assets.xcassets */,
+			);
+			name = Blinko;
+			path = Blinko;
+			sourceTree = "<group>";
+		};
+		E2FC430C5A3063BC93C5767C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				912BFD6FB60ED290259101A9 /* iOS */,
+				C2E39104358B22D514964843 /* SpriteKit.framework */,
+				D89FA352FCCDB1C6AA8D57DE /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6790E21466C6CDE96DE8B0B8 /* Blinko */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A63038990BC5ECF07AC568C6 /* Build configuration list for PBXNativeTarget "Blinko" */;
+			buildPhases = (
+				C6792D1E916BAAB636924D98 /* Sources */,
+				04EBDD6176A6F2B8CE95488F /* Frameworks */,
+				EEA7EC0CF378C4AC8BF1BCD9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Blinko;
+			productName = Blinko;
+			productReference = AF7F47EB6418869B68AC251C /* Blinko.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1C6421AF0628BE256CC9438C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = E738FA83D70455AB23D94A33 /* Build configuration list for PBXProject "Blinko" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 34B5DCF6A2F4ED7C559FDDD6;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1B260940FDA3E63ACE71FDE6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6790E21466C6CDE96DE8B0B8 /* Blinko */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EEA7EC0CF378C4AC8BF1BCD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7409DA5AFBD37CA03143136 /* levels.json in Resources */,
+				F44EAB82BE9FD5578AE130EF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C6792D1E916BAAB636924D98 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8AB8DE11850E32AB8DD08CF /* AppDelegate.swift in Sources */,
+				45310FB842E842EBAFAB3D78 /* Ball.swift in Sources */,
+				E019EC0CAB149801B4AE6D6E /* BallType.swift in Sources */,
+				1859DBC3F032BC8D8D57F9AB /* Bucket.swift in Sources */,
+				DE00B9C92B53FABDB3939C71 /* Effects.swift in Sources */,
+				24BB09618E3FA7B488D91412 /* ExperimentsMenuScene.swift in Sources */,
+				2AE727E386FAB88DFB0B688A /* GameScene.swift in Sources */,
+				D5D0D5ECFFDFD9FE8D8F35C9 /* GameViewController.swift in Sources */,
+				A1502369F4F8EE350F03DBF6 /* Gate.swift in Sources */,
+				9157CFB50CCEC4240396B4FA /* GravityWellLevelConfig.swift in Sources */,
+				FC8D7CDC87A9D33B95301C88 /* GravityWellScene.swift in Sources */,
+				A8BE57A6F4D48E2FE6BAF604 /* GravityWellSelectScene.swift in Sources */,
+				F8F41B5702ED400064BD2655 /* HUD.swift in Sources */,
+				38E90BBEB962C100D239333C /* LevelConfig.swift in Sources */,
+				7FC648AA2A37CFDD8E5E5C02 /* LevelLoader.swift in Sources */,
+				2B6A60EB2F643F8E6B40800B /* LevelSelectScene.swift in Sources */,
+				AFF825A843059C082F7570ED /* MenuScene.swift in Sources */,
+				C2768FB1EABFD3AD384E444B /* Peg.swift in Sources */,
+				3CAD93E83872870E40A327EA /* PegPattern.swift in Sources */,
+				400885D51448D2B0F78076EF /* PhysicsCategory.swift in Sources */,
+				40C9B2A56D8C6CAF4A088646 /* PowerUp.swift in Sources */,
+				9D72FC2BE2C0E7CB229CAD4C /* TempleTheme.swift in Sources */,
+				3881EE7ABCE02612DC16515B /* Trap.swift in Sources */,
+				C43DF6F4DA04833FF90A8D52 /* WorldBallLevelConfig.swift in Sources */,
+				BA2824BF48EDB0D5F750CB82 /* WorldBallScene.swift in Sources */,
+				6D5089660615EC3D9677F86B /* WorldBallSelectScene.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1741C5CC81F97CDE09FA9F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		60984A96AC5A30C2229A295F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9HPD25WB7W;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Blinko/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamesalad.blinkoipad;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B9BA9B3AEBE79CA491B75A18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9HPD25WB7W;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Blinko/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamesalad.blinkoipad;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		CFB67B5EDD1679E385999542 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A63038990BC5ECF07AC568C6 /* Build configuration list for PBXNativeTarget "Blinko" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				60984A96AC5A30C2229A295F /* Release */,
+				B9BA9B3AEBE79CA491B75A18 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E738FA83D70455AB23D94A33 /* Build configuration list for PBXProject "Blinko" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFB67B5EDD1679E385999542 /* Debug */,
+				1741C5CC81F97CDE09FA9F53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1C6421AF0628BE256CC9438C /* Project object */;
+}
