@@ -48,7 +48,7 @@ class MenuScene: SKScene {
     private func setupTitle() {
         // Decorative line
         for dy: CGFloat in [-1, 1] {
-            let line = SKShapeNode()
+            let _ = SKShapeNode()
             let path = CGMutablePath()
             path.move(to: CGPoint(x: -120, y: 0))
             path.addLine(to: CGPoint(x: 120, y: 0))

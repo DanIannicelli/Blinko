@@ -171,7 +171,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let hudOffset = max(topInset + 36, 60)
         hud.position  = CGPoint(x: 0, y: H / 2 - hudOffset)
         hud.zPosition = 50
-        hud.onBallTypeSelected = { [weak self] _, _ in }
+        hud.onBallTypeSelected = { _, _ in }
         addChild(hud)
     }
 
@@ -576,7 +576,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         overlay.run(SKAction.sequence([
             SKAction.wait(forDuration: 0.7),
             SKAction.run { [weak self, weak overlay] in
-                guard let self = self else { return }
+                guard self != nil else { return }
                 // Allow tap to proceed
                 overlay?.run(SKAction.sequence([
                     SKAction.wait(forDuration: 30),
