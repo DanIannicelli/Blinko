@@ -326,7 +326,7 @@
 				INFOPLIST_FILE = Blinko/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gamesalad.blinkoipad;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iannicelli.blinko;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -348,7 +348,7 @@
 				INFOPLIST_FILE = Blinko/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gamesalad.blinkoipad;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iannicelli.blinko;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
