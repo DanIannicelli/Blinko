@@ -36,4 +36,14 @@ enum BallType: String, CaseIterable, Codable {
         case .ghost:  return "◎"
         }
     }
+
+    var descriptionText: String {
+        switch self {
+        case .normal: return "Standard ball — bounces off pegs"
+        case .key:    return "Unlocks the matching colored gate"
+        case .bomb:   return "Explodes on landing, blasts nearby pegs"
+        case .heavy:  return "Heavy — smashes through pegs on impact"
+        case .ghost:  return "Passes through pegs, only walls stop it"
+        }
+    }
 }

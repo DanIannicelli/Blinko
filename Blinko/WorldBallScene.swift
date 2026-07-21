@@ -16,11 +16,14 @@ class WorldBallScene: SKScene {
     private var jumpBtn:  SKShapeNode!
 
     // MARK: - State
-    private let walkSpeed:       CGFloat = 1.5
-    private let jumpSpeed:       CGFloat = 480
-    private let gravityStrength: CGFloat = 2800
+    private let walkSpeed:       CGFloat = 0.55  // slower on big worlds
+    private let jumpSpeed:       CGFloat = 3800  // scaled for large worlds
+    private let gravityStrength: CGFloat = 22000 // scaled for large worlds
+    private let worldScale:      CGFloat = 0.42  // ~50% more zoom than before
 
-    private var voidZones:        [VoidZone] = []
+    private var voidZones:       [VoidZone] = []
+    private var coins:           [(node: SKNode, angle: CGFloat, planetIdx: Int)] = []
+    private var coinCount:       Int = 0
 
     private var playerAngle:     CGFloat = -.pi / 2
     private var currentPlanet:   Int = 0
@@ -30,17 +33,20 @@ class WorldBallScene: SKScene {
     private var playerVel:       CGVector = .zero
     private var leftHeld         = false
     private var rightHeld        = false
+    private var facingRight:     Bool = true
     private var lastUpdate:      TimeInterval = 0
     private var levelComplete    = false
-    private var settleTimer:     CGFloat = 0   // counts up after landing
+    private var settleTimer:     CGFloat = 0
 
     private let planetScreenY:   CGFloat = -40
+    private var coinLabel:       SKLabelNode!
 
     // MARK: - Lifecycle
 
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(red: 0.01, green: 0.01, blue: 0.06, alpha: 1)
         addChild(worldNode)
+        worldNode.setScale(worldScale)
         setupStars()
         buildLevel()
         setupControls()
@@ -100,7 +106,10 @@ class WorldBallScene: SKScene {
                                       color: cfg.color, gravityRadius: gravR, node: node))
         }
 
+        coins.removeAll()
+        coinCount = 0
         spawnVoidRocks()
+        spawnCoinsAndBoxes()
         setupFlag()
         setupPlayer()
     }
@@ -180,6 +189,50 @@ class WorldBallScene: SKScene {
                     SKAction.rotate(byAngle: (Bool.random() ? 1 : -1) * CGFloat.random(in: 0.3...0.8),
                                     duration: Double.random(in: 4...9))
                 ))
+            }
+        }
+    }
+
+    private func spawnCoinsAndBoxes() {
+        for (idx, cfg) in levelConfig.planets.enumerated() {
+            let coinAngles = stride(from: CGFloat(0), to: .pi * 2, by: .pi / 5)
+            for angle in coinAngles {
+                let coin = SKShapeNode(circleOfRadius: 28)
+                coin.fillColor   = UIColor(red:1.0, green:0.85, blue:0.15, alpha:1)
+                coin.strokeColor = UIColor(red:0.9, green:0.65, blue:0.05, alpha:1)
+                coin.lineWidth   = 6
+                coin.zPosition   = 8
+                let inner = SKShapeNode(circleOfRadius: 16)
+                inner.fillColor   = UIColor(red:1.0, green:0.95, blue:0.45, alpha:1)
+                inner.strokeColor = .clear
+                coin.addChild(inner)
+                let dist = cfg.radius + 55
+                coin.position = CGPoint(x: cfg.position.x + cos(angle) * dist,
+                                        y: cfg.position.y + sin(angle) * dist)
+                coin.name = "coin_\(idx)_\(Int(angle*10))"
+                worldNode.addChild(coin)
+                coins.append((node: coin, angle: angle, planetIdx: idx))
+            }
+
+            // Item boxes — 2-3 per planet at random angles
+            let boxAngles: [CGFloat] = [.pi/3, .pi, 5 * .pi/3]
+            for angle in boxAngles {
+                let box = SKShapeNode(rectOf: CGSize(width: 80, height: 80), cornerRadius: 8)
+                box.fillColor   = UIColor(red:0.95, green:0.70, blue:0.10, alpha:1)
+                box.strokeColor = UIColor(red:0.70, green:0.45, blue:0.05, alpha:1)
+                box.lineWidth   = 6
+                box.zPosition   = 8
+                let lbl = SKLabelNode(fontNamed: "AvenirNext-Bold")
+                lbl.text = "?"; lbl.fontSize = 52
+                lbl.fontColor = UIColor(white:1, alpha:0.9)
+                lbl.verticalAlignmentMode = .center
+                box.addChild(lbl)
+                let dist = cfg.radius + 60
+                box.position  = CGPoint(x: cfg.position.x + cos(angle) * dist,
+                                        y: cfg.position.y + sin(angle) * dist)
+                box.zRotation = angle - .pi/2
+                box.name = "box_\(idx)_\(Int(angle*10))"
+                worldNode.addChild(box)
             }
         }
     }
@@ -327,10 +380,16 @@ class WorldBallScene: SKScene {
     // MARK: - Controls
 
     private func setupControls() {
-        let y: CGFloat = -size.height/2 + 60
-        leftBtn  = makeBtn("◀", CGPoint(x:-size.width/2+50,  y:y), "left")
-        rightBtn = makeBtn("▶", CGPoint(x:-size.width/2+120, y:y), "right")
-        jumpBtn  = makeBtn("▲", CGPoint(x: size.width/2-60,  y:y), "jump")
+        // Place buttons in safe area corners — works in portrait and landscape
+        let margin: CGFloat = 50
+        let y: CGFloat      = -size.height/2 + margin
+        let lx1: CGFloat    = -size.width/2  + margin
+        let lx2: CGFloat    = -size.width/2  + margin * 2.4
+        let rx: CGFloat     =  size.width/2  - margin
+
+        leftBtn  = makeBtn("◀", CGPoint(x: lx1, y: y), "left")
+        rightBtn = makeBtn("▶", CGPoint(x: lx2, y: y), "right")
+        jumpBtn  = makeBtn("▲", CGPoint(x: rx,  y: y), "jump")
         addChild(leftBtn); addChild(rightBtn); addChild(jumpBtn)
     }
 
@@ -376,6 +435,15 @@ class WorldBallScene: SKScene {
         back.position = CGPoint(x:size.width/2-16, y:size.height/2-52)
         back.zPosition = 100; back.name = "levels"
         addChild(back)
+
+        coinLabel = SKLabelNode(fontNamed: "AvenirNext-Bold")
+        coinLabel.text = "🪙 0"
+        coinLabel.fontSize = 15
+        coinLabel.fontColor = UIColor(red:1.0,green:0.85,blue:0.15,alpha:1)
+        coinLabel.horizontalAlignmentMode = .right
+        coinLabel.position = CGPoint(x: size.width/2-16, y: size.height/2-78)
+        coinLabel.zPosition = 100
+        addChild(coinLabel)
     }
 
     // MARK: - Touch
@@ -435,10 +503,32 @@ class WorldBallScene: SKScene {
     }
 
     private func updateGrounded(dt: CGFloat) {
-        if leftHeld  { playerAngle += walkSpeed * dt }
-        if rightHeld { playerAngle -= walkSpeed * dt }
+        if leftHeld  { playerAngle += walkSpeed * dt; facingRight = false }
+        if rightHeld { playerAngle -= walkSpeed * dt; facingRight = true  }
         playerNode.position  = surfacePos(planet: planets[currentPlanet], angle: playerAngle)
         playerNode.zRotation = playerAngle - .pi/2
+        playerNode.xScale    = facingRight ? 1 : -1
+        checkCoinCollect()
+    }
+
+    private func checkCoinCollect() {
+        let pos = playerNode.position
+        for i in stride(from: coins.count - 1, through: 0, by: -1) {
+            let c = coins[i]
+            let d = hypot(pos.x - c.node.position.x, pos.y - c.node.position.y)
+            if d < 55 {
+                c.node.run(SKAction.sequence([
+                    SKAction.group([
+                        SKAction.scale(to: 1.6, duration: 0.12),
+                        SKAction.fadeOut(withDuration: 0.18)
+                    ]),
+                    SKAction.removeFromParent()
+                ]))
+                coins.remove(at: i)
+                coinCount += 1
+                coinLabel.text = "🪙 \(coinCount)"
+            }
+        }
     }
 
     private func updateJump(dt: CGFloat) {
@@ -663,26 +753,26 @@ class WorldBallScene: SKScene {
 
             let r = worldNode.zRotation
 
-            // Position: follow player in void (slow), stay on depart planet otherwise
-            let blendPos: CGFloat = inVoid ? 0.012 : 0.018
-            let anchorPt: CGPoint = inVoid ? pos : depart.position
-            let destX = -(anchorPt.x * cos(r) - anchorPt.y * sin(r))
-            let destY = -(anchorPt.x * sin(r) + anchorPt.y * cos(r)) + planetScreenY
+            // Camera stays planet-anchored during jump — no tracking the airborne player
+            // In void: slowly drift toward destination planet; outside: hold on departure
+            let blendPos: CGFloat = inVoid ? 0.008 : 0.014
+            let anchorPt: CGPoint = inVoid ? refPlanet.position : depart.position
+            let destX = -(anchorPt.x * cos(r) - anchorPt.y * sin(r)) * worldScale
+            let destY = -(anchorPt.x * sin(r) + anchorPt.y * cos(r)) * worldScale + planetScreenY
             worldNode.position.x += (destX - worldNode.position.x) * blendPos
             worldNode.position.y += (destY - worldNode.position.y) * blendPos
 
         } else {
-            let planet    = planets[currentPlanet]
             let targetRot = CGFloat.pi/2 - playerAngle
-            // Slow settle right after landing, tight follow once walking
-            let t      = min(settleTimer / 0.9, 1.0)          // 0→1 over 0.9 seconds
-            let blend  = 0.04 + (0.18 - 0.04) * t            // 0.04 → 0.18
+            let t      = min(settleTimer / 0.9, 1.0)
+            let blend  = 0.04 + (0.18 - 0.04) * t
             worldNode.zRotation += shortestAngle(from: worldNode.zRotation, to: targetRot) * blend
 
+            // Follow the player — must account for worldScale in the offset
             let r   = worldNode.zRotation
-            let px  = planet.position.x, py = planet.position.y
-            let destX = -(px*cos(r) - py*sin(r))
-            let destY = -(px*sin(r) + py*cos(r)) + planetScreenY
+            let px  = playerNode.position.x, py = playerNode.position.y
+            let destX = -(px*cos(r) - py*sin(r)) * worldScale
+            let destY = -(px*sin(r) + py*cos(r)) * worldScale + planetScreenY
             worldNode.position.x += (destX - worldNode.position.x) * blend
             worldNode.position.y += (destY - worldNode.position.y) * blend
         }

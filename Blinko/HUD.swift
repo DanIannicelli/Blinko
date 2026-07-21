@@ -35,7 +35,7 @@ class HUD: SKNode {
 
     private func buildHUD() {
         // Background panel
-        let panel = SKShapeNode(rectOf: CGSize(width: 420, height: 64), cornerRadius: 0)
+        let panel = SKShapeNode(rectOf: CGSize(width: 420, height: 110), cornerRadius: 0)
         panel.fillColor   = TempleTheme.hudBG
         panel.strokeColor = UIColor(red: 0.25, green: 0.20, blue: 0.12, alpha: 0.8)
         panel.lineWidth   = 1
@@ -45,8 +45,8 @@ class HUD: SKNode {
         // Gold top border line
         let border = SKShapeNode()
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: -210, y: -32))
-        path.addLine(to: CGPoint(x: 210, y: -32))
+        path.move(to: CGPoint(x: -210, y: -28))
+        path.addLine(to: CGPoint(x: 210, y: -28))
         let b = SKShapeNode(path: path)
         b.strokeColor = TempleTheme.gold.withAlphaComponent(0.4)
         b.lineWidth = 1
@@ -75,7 +75,7 @@ class HUD: SKNode {
         addChild(targetLabel)
 
         selectorRow = SKNode()
-        selectorRow.position = CGPoint(x: 0, y: -38)
+        selectorRow.position = CGPoint(x: 0, y: -52)
         selectorRow.zPosition = 2
         addChild(selectorRow)
     }
@@ -93,35 +93,48 @@ class HUD: SKNode {
 
     // MARK: - Ball type selector
 
+    private var descLabel: SKLabelNode!
+
     private func buildSelector(types: [(BallType, String?)]) {
         availableTypes = types
         selectedIndex  = 0
         typeButtons.removeAll()
         selectorRow.removeAllChildren()
 
-        guard types.count > 1 else { return }  // single type = no selector shown
-
-        let btnW: CGFloat = 52
-        let spacing: CGFloat = 6
+        // Always show selector (even single type so player knows what ball they have)
+        let btnW: CGFloat    = 64
+        let btnH: CGFloat    = 38
+        let spacing: CGFloat = 8
         let totalW = CGFloat(types.count) * (btnW + spacing) - spacing
         let startX = -totalW / 2 + btnW / 2
 
         for (i, (type, keyColor)) in types.enumerated() {
-            let btn = buildTypeButton(type: type, keyColor: keyColor, index: i)
+            let btn = buildTypeButton(type: type, keyColor: keyColor, index: i, w: btnW, h: btnH)
             btn.position = CGPoint(x: startX + CGFloat(i) * (btnW + spacing), y: 0)
             selectorRow.addChild(btn)
             typeButtons.append(btn)
         }
+
+        // Description label below buttons
+        descLabel = SKLabelNode(fontNamed: TempleTheme.smallFont)
+        descLabel.fontSize  = 11
+        descLabel.fontColor = TempleTheme.gold.withAlphaComponent(0.75)
+        descLabel.verticalAlignmentMode = .center
+        descLabel.position  = CGPoint(x: 0, y: -(btnH / 2 + 12))
+        descLabel.zPosition = 2
+        selectorRow.addChild(descLabel)
+
         highlightSelected()
     }
 
-    private func buildTypeButton(type: BallType, keyColor: String?, index: Int) -> SKNode {
+    private func buildTypeButton(type: BallType, keyColor: String?, index: Int,
+                                  w: CGFloat, h: CGFloat) -> SKNode {
         let node = SKNode()
         node.name = "ballBtn_\(index)"
 
-        let bg = SKShapeNode(rectOf: CGSize(width: 50, height: 24), cornerRadius: 5)
+        let bg = SKShapeNode(rectOf: CGSize(width: w, height: h), cornerRadius: 7)
         bg.fillColor   = UIColor(red: 0.12, green: 0.10, blue: 0.07, alpha: 1)
-        bg.strokeColor = TempleTheme.dimText.withAlphaComponent(0.5)
+        bg.strokeColor = TempleTheme.dimText.withAlphaComponent(0.4)
         bg.lineWidth   = 1
         bg.name        = "bg"
         node.addChild(bg)
@@ -129,20 +142,24 @@ class HUD: SKNode {
         let color = (type == .key && keyColor != nil)
             ? TempleTheme.gateColor(for: keyColor!)
             : type.color
-        let dot = SKShapeNode(circleOfRadius: 6)
-        dot.fillColor   = color
-        dot.strokeColor = color.withAlphaComponent(0.4)
-        dot.position    = CGPoint(x: -12, y: 0)
-        node.addChild(dot)
 
-        let lbl = SKLabelNode(fontNamed: TempleTheme.smallFont)
-        lbl.text     = type.displayName
-        lbl.fontSize = 10
-        lbl.fontColor = TempleTheme.dimText
-        lbl.verticalAlignmentMode = .center
-        lbl.position  = CGPoint(x: 8, y: 0)
-        lbl.name      = "lbl"
-        node.addChild(lbl)
+        let iconLbl = SKLabelNode(fontNamed: TempleTheme.bodyFont)
+        iconLbl.text     = type.icon
+        iconLbl.fontSize = 16
+        iconLbl.fontColor = color
+        iconLbl.verticalAlignmentMode = .center
+        iconLbl.position  = CGPoint(x: 0, y: 8)
+        iconLbl.name      = "icon"
+        node.addChild(iconLbl)
+
+        let nameLbl = SKLabelNode(fontNamed: TempleTheme.smallFont)
+        nameLbl.text     = type.displayName
+        nameLbl.fontSize = 10
+        nameLbl.fontColor = TempleTheme.dimText
+        nameLbl.verticalAlignmentMode = .center
+        nameLbl.position  = CGPoint(x: 0, y: -9)
+        nameLbl.name      = "lbl"
+        node.addChild(nameLbl)
 
         return node
     }
@@ -151,15 +168,28 @@ class HUD: SKNode {
         for (i, btn) in typeButtons.enumerated() {
             let isSelected = i == selectedIndex
             if let bg = btn.childNode(withName: "bg") as? SKShapeNode {
-                bg.strokeColor = isSelected ? TempleTheme.gold : TempleTheme.dimText.withAlphaComponent(0.5)
-                bg.lineWidth   = isSelected ? 1.5 : 1
+                bg.strokeColor = isSelected ? TempleTheme.gold : TempleTheme.dimText.withAlphaComponent(0.4)
+                bg.lineWidth   = isSelected ? 2 : 1
                 bg.fillColor   = isSelected
-                    ? UIColor(red: 0.20, green: 0.16, blue: 0.08, alpha: 1)
+                    ? UIColor(red: 0.22, green: 0.17, blue: 0.08, alpha: 1)
                     : UIColor(red: 0.12, green: 0.10, blue: 0.07, alpha: 1)
             }
             if let lbl = btn.childNode(withName: "lbl") as? SKLabelNode {
                 lbl.fontColor = isSelected ? TempleTheme.brightText : TempleTheme.dimText
             }
+            if let icon = btn.childNode(withName: "icon") as? SKLabelNode {
+                icon.setScale(isSelected ? 1.15 : 1.0)
+            }
+        }
+        // Update description
+        if descLabel != nil, !availableTypes.isEmpty {
+            descLabel.text = availableTypes[selectedIndex].0.descriptionText
+            descLabel.removeAllActions()
+            descLabel.alpha = 1
+            descLabel.run(SKAction.sequence([
+                SKAction.wait(forDuration: 2.5),
+                SKAction.fadeAlpha(to: 0.3, duration: 0.6)
+            ]))
         }
     }
 

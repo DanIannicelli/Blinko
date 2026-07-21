@@ -10,6 +10,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var canDrop         = true
     private var aimX:  CGFloat  = 0
     private var lightningActive = false
+    private var touchConsumedByUI = false  // prevents drop when tapping HUD
 
     // MARK: - Node layers
     private var hud:          HUD!
@@ -297,12 +298,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Input
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
+        guard !touchConsumedByUI, let touch = touches.first else { return }
         updateAim(x: touch.location(in: self).x)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        defer { touchConsumedByUI = false }
+        guard !touchConsumedByUI else { return }
         dropBall()
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchConsumedByUI = false
     }
 
     private func updateAim(x: CGFloat) {
@@ -689,14 +696,14 @@ extension GameScene {
         guard let touch = touches.first else { return }
         let loc = touch.location(in: self)
 
-        if handleOverlayTap(at: loc) { return }
+        if handleOverlayTap(at: loc) { touchConsumedByUI = true; return }
 
         #if DEBUG
-        if handleDevTap(at: loc) { return }
+        if handleDevTap(at: loc) { touchConsumedByUI = true; return }
         #endif
 
         let hudLoc = convert(loc, to: hud)
-        if hud.handleTap(at: hudLoc) { return }
+        if hud.handleTap(at: hudLoc) { touchConsumedByUI = true; return }
 
         updateAim(x: loc.x)
     }

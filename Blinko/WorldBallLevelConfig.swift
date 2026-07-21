@@ -5,7 +5,7 @@ struct WorldBallPlanetConfig {
     var position:  CGPoint
     var radius:    CGFloat
     var color:     UIColor
-    var gravMult:  CGFloat   // gravity zone = radius * gravMult
+    var gravMult:  CGFloat
 }
 
 struct WorldBallLevelConfig {
@@ -19,7 +19,6 @@ struct WorldBallLevelConfig {
     var tip:         String
 }
 
-// Colours
 private func green()  -> UIColor { UIColor(red:0.20,green:0.52,blue:0.26,alpha:1) }
 private func brown()  -> UIColor { UIColor(red:0.52,green:0.36,blue:0.18,alpha:1) }
 private func blue()   -> UIColor { UIColor(red:0.18,green:0.33,blue:0.58,alpha:1) }
@@ -29,143 +28,140 @@ private func teal()   -> UIColor { UIColor(red:0.18,green:0.45,blue:0.52,alpha:1
 private func rust()   -> UIColor { UIColor(red:0.55,green:0.25,blue:0.15,alpha:1) }
 private func slate()  -> UIColor { UIColor(red:0.30,green:0.32,blue:0.40,alpha:1) }
 
+// Scale factor — planets are large worlds you explore
+private let S: CGFloat = 8.0
+
 struct WorldBallLevels {
 
     static let all: [WorldBallLevelConfig] = [
 
-        // L1 — Three planets straight up
+        // L1 — Two worlds, find the launch point
         .init(number:1, title:"First Steps",
               planets:[
-                .init(position:.zero,                       radius:240, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:0,    y:680),      radius:180, color:brown(),  gravMult:1.45),
-                .init(position:CGPoint(x:0,    y:1200),     radius:160, color:teal(),   gravMult:1.45),
+                .init(position:.zero,                                radius:240*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:0,    y:800*S),             radius:200*S, color:teal(),   gravMult:1.45),
+              ],
+              startPlanet:0, startAngle:-.pi/2,
+              flagPlanet:1,  flagAngle:.pi/2,
+              tip:"Explore the planet — find where to jump"),
+
+        // L2 — Three worlds in a triangle
+        .init(number:2, title:"Side Step",
+              planets:[
+                .init(position:.zero,                                radius:220*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:600*S, y:500*S),            radius:180*S, color:brown(),  gravMult:1.45),
+                .init(position:CGPoint(x:-400*S,y:900*S),            radius:190*S, color:teal(),   gravMult:1.45),
               ],
               startPlanet:0, startAngle:-.pi/2,
               flagPlanet:2,  flagAngle:.pi/2,
-              tip:"Jump straight up — three large worlds"),
+              tip:"The path isn't straight — explore each world"),
 
-        // L2 — Zig-zag
-        .init(number:2, title:"Side Step",
-              planets:[
-                .init(position:.zero,                       radius:220, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:550,  y:400),      radius:160, color:brown(),  gravMult:1.45),
-                .init(position:CGPoint(x:-450, y:780),      radius:150, color:blue(),   gravMult:1.45),
-                .init(position:CGPoint(x:300,  y:1200),     radius:170, color:teal(),   gravMult:1.45),
-              ],
-              startPlanet:0, startAngle:-.pi/2,
-              flagPlanet:3,  flagAngle:.pi/2,
-              tip:"Jump left then right to reach the flag"),
-
-        // L3 — Stepping stones between big planets
+        // L3 — Stepping stone between two giants
         .init(number:3, title:"Stone Hopper",
               planets:[
-                .init(position:.zero,                       radius:230, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:200,  y:560),      radius: 90, color:sand(),   gravMult:1.42),
-                .init(position:CGPoint(x:-230, y:900),      radius: 95, color:rust(),   gravMult:1.42),
-                .init(position:CGPoint(x:120,  y:1260),     radius:190, color:teal(),   gravMult:1.45),
+                .init(position:.zero,                                radius:260*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:250*S, y:700*S),            radius: 80*S, color:sand(),   gravMult:1.42),
+                .init(position:CGPoint(x:-200*S,y:1200*S),           radius:220*S, color:teal(),   gravMult:1.45),
+              ],
+              startPlanet:0, startAngle:-.pi/2,
+              flagPlanet:2,  flagAngle:.pi/2,
+              tip:"Hit the small world in the middle"),
+
+        // L4 — Wide spread, walk to find angles
+        .init(number:4, title:"Far Reach",
+              planets:[
+                .init(position:.zero,                                radius:230*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:700*S, y:300*S),            radius:170*S, color:brown(),  gravMult:1.45),
+                .init(position:CGPoint(x:500*S, y:900*S),            radius:120*S, color:purple(), gravMult:1.42),
+                .init(position:CGPoint(x:-300*S,y:1300*S),           radius:200*S, color:teal(),   gravMult:1.45),
               ],
               startPlanet:0, startAngle:-.pi/2,
               flagPlanet:3,  flagAngle:.pi/2,
-              tip:"Smaller worlds in the middle — aim carefully"),
-
-        // L4 — Wide spread
-        .init(number:4, title:"Far Reach",
-              planets:[
-                .init(position:.zero,                       radius:220, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:680,  y:280),      radius:170, color:brown(),  gravMult:1.45),
-                .init(position:CGPoint(x:420,  y:750),      radius:100, color:purple(), gravMult:1.42),
-                .init(position:CGPoint(x:-300, y:1080),     radius:180, color:blue(),   gravMult:1.45),
-                .init(position:CGPoint(x:200,  y:1550),     radius:160, color:teal(),   gravMult:1.45),
-              ],
-              startPlanet:0, startAngle:-.pi/2,
-              flagPlanet:4,  flagAngle:.pi/2,
-              tip:"Planets spread wide — walk around to find the angle"),
+              tip:"Walk the full surface to find your angle"),
 
         // L5 — Chain of small worlds
         .init(number:5, title:"The Chain",
               planets:[
-                .init(position:.zero,                       radius:210, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:90,   y:480),      radius: 80, color:sand(),   gravMult:1.42),
-                .init(position:CGPoint(x:-100, y:750),      radius: 75, color:rust(),   gravMult:1.42),
-                .init(position:CGPoint(x:120,  y:1010),     radius: 85, color:purple(), gravMult:1.42),
-                .init(position:CGPoint(x:-90,  y:1270),     radius: 70, color:slate(),  gravMult:1.42),
-                .init(position:CGPoint(x:50,   y:1520),     radius:170, color:teal(),   gravMult:1.45),
+                .init(position:.zero,                                radius:220*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:100*S, y:600*S),            radius: 75*S, color:sand(),   gravMult:1.42),
+                .init(position:CGPoint(x:-120*S,y:950*S),            radius: 80*S, color:rust(),   gravMult:1.42),
+                .init(position:CGPoint(x:140*S, y:1280*S),           radius: 70*S, color:purple(), gravMult:1.42),
+                .init(position:CGPoint(x:60*S,  y:1650*S),           radius:190*S, color:teal(),   gravMult:1.45),
               ],
               startPlanet:0, startAngle:-.pi/2,
-              flagPlanet:5,  flagAngle:.pi/2,
-              tip:"Five small worlds — miss one and fall back"),
+              flagPlanet:4,  flagAngle:.pi/2,
+              tip:"Small worlds between the giants — aim carefully"),
 
-        // L6 — Two paths, one dead end
+        // L6 — Fork: left leads to goal, right is dead end
         .init(number:6, title:"The Fork",
               planets:[
-                .init(position:.zero,                       radius:220, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:-500, y:500),      radius:150, color:brown(),  gravMult:1.45),
-                .init(position:CGPoint(x: 500, y:500),      radius:100, color:rust(),   gravMult:1.42),  // dead end
-                .init(position:CGPoint(x:-350, y:980),      radius:120, color:blue(),   gravMult:1.42),
-                .init(position:CGPoint(x:60,   y:1420),     radius:180, color:teal(),   gravMult:1.45),
+                .init(position:.zero,                                radius:230*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:-550*S,y:550*S),            radius:160*S, color:brown(),  gravMult:1.45),
+                .init(position:CGPoint(x: 550*S,y:550*S),            radius:110*S, color:rust(),   gravMult:1.42),
+                .init(position:CGPoint(x:-400*S,y:1100*S),           radius:130*S, color:blue(),   gravMult:1.42),
+                .init(position:CGPoint(x:80*S,  y:1600*S),           radius:200*S, color:teal(),   gravMult:1.45),
               ],
               startPlanet:0, startAngle:-.pi/2,
               flagPlanet:4,  flagAngle:.pi/2,
-              tip:"Right side is a dead end — go left"),
+              tip:"Two paths — only one leads forward"),
 
-        // L7 — Massive planet in the middle pulls you off course
+        // L7 — Giant trap planet
         .init(number:7, title:"Gravity Trap",
               planets:[
-                .init(position:.zero,                       radius:220, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:0,    y:650),      radius:260, color:brown(),  gravMult:1.42),  // massive trap
-                .init(position:CGPoint(x:-560, y:650),      radius:100, color:purple(), gravMult:1.42),  // escape left
-                .init(position:CGPoint(x:-520, y:1200),     radius:120, color:slate(),  gravMult:1.42),
-                .init(position:CGPoint(x:0,    y:1650),     radius:170, color:teal(),   gravMult:1.45),
+                .init(position:.zero,                                radius:230*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:0,     y:700*S),            radius:280*S, color:brown(),  gravMult:1.42),
+                .init(position:CGPoint(x:-620*S,y:700*S),            radius:110*S, color:purple(), gravMult:1.42),
+                .init(position:CGPoint(x:-580*S,y:1350*S),           radius:130*S, color:slate(),  gravMult:1.42),
+                .init(position:CGPoint(x:0,     y:1800*S),           radius:200*S, color:teal(),   gravMult:1.45),
               ],
               startPlanet:0, startAngle:-.pi/2,
               flagPlanet:4,  flagAngle:.pi/2,
-              tip:"Big planet in the middle — go around the left"),
+              tip:"The big world pulls you in — go around the left"),
 
-        // L8 — Spiral outward
+        // L8 — Spiral path
         .init(number:8, title:"Spiral",
               planets:[
-                .init(position:.zero,                       radius:210, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:480,  y:280),      radius:120, color:brown(),  gravMult:1.42),
-                .init(position:CGPoint(x:600,  y:720),      radius:110, color:rust(),   gravMult:1.42),
-                .init(position:CGPoint(x:280,  y:1120),     radius:115, color:sand(),   gravMult:1.42),
-                .init(position:CGPoint(x:-220, y:1380),     radius:120, color:blue(),   gravMult:1.42),
-                .init(position:CGPoint(x:-480, y:1020),     radius: 90, color:purple(), gravMult:1.42),  // extra loop
-                .init(position:CGPoint(x:0,    y:1800),     radius:180, color:teal(),   gravMult:1.45),
+                .init(position:.zero,                                radius:220*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:500*S, y:300*S),            radius:130*S, color:brown(),  gravMult:1.42),
+                .init(position:CGPoint(x:650*S, y:800*S),            radius:120*S, color:rust(),   gravMult:1.42),
+                .init(position:CGPoint(x:300*S, y:1200*S),           radius:125*S, color:sand(),   gravMult:1.42),
+                .init(position:CGPoint(x:-250*S,y:1500*S),           radius:130*S, color:blue(),   gravMult:1.42),
+                .init(position:CGPoint(x:-520*S,y:1100*S),           radius:100*S, color:purple(), gravMult:1.42),
+                .init(position:CGPoint(x:0,     y:2000*S),           radius:200*S, color:teal(),   gravMult:1.45),
               ],
               startPlanet:0, startAngle:-.pi/2,
               flagPlanet:6,  flagAngle:.pi/2,
-              tip:"Follow the spiral — don't get sucked into the loop"),
+              tip:"Follow the spiral outward"),
 
-        // L9 — Clusters with gap
+        // L9 — Two clusters with a big void gap
         .init(number:9, title:"Clusters",
               planets:[
-                .init(position:.zero,                       radius:220, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:-240, y:500),      radius: 85, color:brown(),  gravMult:1.42),
-                .init(position:CGPoint(x:-110, y:570),      radius: 75, color:sand(),   gravMult:1.42),
-                // gap here
-                .init(position:CGPoint(x:140,  y:920),      radius: 80, color:purple(), gravMult:1.42),
-                .init(position:CGPoint(x:360,  y:1200),     radius: 95, color:rust(),   gravMult:1.42),
-                .init(position:CGPoint(x:220,  y:1300),     radius: 80, color:slate(),  gravMult:1.42),
-                .init(position:CGPoint(x:80,   y:1680),     radius:180, color:teal(),   gravMult:1.45),
+                .init(position:.zero,                                radius:230*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:-260*S,y:550*S),            radius: 90*S, color:brown(),  gravMult:1.42),
+                .init(position:CGPoint(x:-120*S,y:630*S),            radius: 80*S, color:sand(),   gravMult:1.42),
+                .init(position:CGPoint(x:160*S, y:1050*S),           radius: 85*S, color:purple(), gravMult:1.42),
+                .init(position:CGPoint(x:380*S, y:1350*S),           radius:100*S, color:rust(),   gravMult:1.42),
+                .init(position:CGPoint(x:240*S, y:1450*S),           radius: 85*S, color:slate(),  gravMult:1.42),
+                .init(position:CGPoint(x:90*S,  y:1900*S),           radius:200*S, color:teal(),   gravMult:1.45),
               ],
               startPlanet:0, startAngle:-.pi/2,
               flagPlanet:6,  flagAngle:.pi/2,
-              tip:"Two clusters with dead space between — bridge the gap"),
+              tip:"Two clusters — bridge the void between them"),
 
-        // L10 — Long vertical climb
+        // L10 — Long vertical climb, alternating sides
         .init(number:10, title:"Skyreach",
               planets:[
-                .init(position:.zero,                       radius:220, color:green(),  gravMult:1.45),
-                .init(position:CGPoint(x:280,  y:420),      radius: 85, color:brown(),  gravMult:1.42),
-                .init(position:CGPoint(x:-380, y:720),      radius: 90, color:rust(),   gravMult:1.42),
-                .init(position:CGPoint(x:460,  y:1000),     radius: 80, color:sand(),   gravMult:1.42),
-                .init(position:CGPoint(x:-160, y:1280),     radius: 85, color:purple(), gravMult:1.42),
-                .init(position:CGPoint(x:340,  y:1540),     radius: 75, color:slate(),  gravMult:1.42),
-                .init(position:CGPoint(x:-320, y:1800),     radius: 88, color:blue(),   gravMult:1.42),
-                .init(position:CGPoint(x:80,   y:2100),     radius:210, color:teal(),   gravMult:1.45),
+                .init(position:.zero,                                radius:230*S, color:green(),  gravMult:1.45),
+                .init(position:CGPoint(x:300*S, y:500*S),            radius: 90*S, color:brown(),  gravMult:1.42),
+                .init(position:CGPoint(x:-400*S,y:900*S),            radius: 95*S, color:rust(),   gravMult:1.42),
+                .init(position:CGPoint(x:480*S, y:1250*S),           radius: 85*S, color:sand(),   gravMult:1.42),
+                .init(position:CGPoint(x:-180*S,y:1600*S),           radius: 90*S, color:purple(), gravMult:1.42),
+                .init(position:CGPoint(x:360*S, y:1950*S),           radius: 80*S, color:slate(),  gravMult:1.42),
+                .init(position:CGPoint(x:-340*S,y:2300*S),           radius: 92*S, color:blue(),   gravMult:1.42),
+                .init(position:CGPoint(x:90*S,  y:2700*S),           radius:220*S, color:teal(),   gravMult:1.45),
               ],
               startPlanet:0, startAngle:-.pi/2,
               flagPlanet:7,  flagAngle:.pi/2,
-              tip:"Seven jumps alternating sides — the long way up"),
+              tip:"Seven jumps — the long way up"),
     ]
 }
