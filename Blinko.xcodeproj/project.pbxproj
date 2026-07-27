@@ -35,6 +35,7 @@
 		D9A9EB3EA78753C2BF4DD243 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E39104358B22D514964843 /* SpriteKit.framework */; };
 		DE00B9C92B53FABDB3939C71 /* Effects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8F6C7242DDA04431C56002 /* Effects.swift */; };
 		E019EC0CAB149801B4AE6D6E /* BallType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCB92BCAED1D2DC66E4FFFD /* BallType.swift */; };
+		AA11BB22CC33DD44EE55FF66 /* BallTypeDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF67 /* BallTypeDrawer.swift */; };
 		F44EAB82BE9FD5578AE130EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0FD750C182DED751B08488F /* Assets.xcassets */; };
 		F8F41B5702ED400064BD2655 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE5023561749C2F9109427 /* HUD.swift */; };
 		FC8D7CDC87A9D33B95301C88 /* GravityWellScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D0BD3F52764654B80767FB /* GravityWellScene.swift */; };
@@ -67,6 +68,7 @@
 		AF000ADE027F6C09627AE83A /* PhysicsCategory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
 		AF7F47EB6418869B68AC251C /* Blinko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blinko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCB92BCAED1D2DC66E4FFFD /* BallType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BallType.swift; sourceTree = "<group>"; };
+		AA11BB22CC33DD44EE55FF67 /* BallTypeDrawer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BallTypeDrawer.swift; sourceTree = "<group>"; };
 		C2E39104358B22D514964843 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		D89FA352FCCDB1C6AA8D57DE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DF893CF34A0193C6355848CD /* GravityWellLevelConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GravityWellLevelConfig.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				4EBB17E6C336C061C59D88F7 /* AppDelegate.swift */,
 				78B8BA3C8B9E80823C9BDCF0 /* Ball.swift */,
 				BDCB92BCAED1D2DC66E4FFFD /* BallType.swift */,
+				AA11BB22CC33DD44EE55FF67 /* BallTypeDrawer.swift */,
 				4A5F9264BD1B9BEB0B5661F2 /* Bucket.swift */,
 				6C8F6C7242DDA04431C56002 /* Effects.swift */,
 				136E42F14D81ADBEA1EF109B /* ExperimentsMenuScene.swift */,
@@ -231,6 +234,7 @@
 				C8AB8DE11850E32AB8DD08CF /* AppDelegate.swift in Sources */,
 				45310FB842E842EBAFAB3D78 /* Ball.swift in Sources */,
 				E019EC0CAB149801B4AE6D6E /* BallType.swift in Sources */,
+				AA11BB22CC33DD44EE55FF66 /* BallTypeDrawer.swift in Sources */,
 				1859DBC3F032BC8D8D57F9AB /* Bucket.swift in Sources */,
 				DE00B9C92B53FABDB3939C71 /* Effects.swift in Sources */,
 				24BB09618E3FA7B488D91412 /* ExperimentsMenuScene.swift in Sources */,

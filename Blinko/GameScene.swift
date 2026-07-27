@@ -10,7 +10,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var canDrop         = true
     private var aimX:  CGFloat  = 0
     private var lightningActive = false
-    private var touchConsumedByUI = false  // prevents drop when tapping HUD
+    private var touchConsumedByUI = false
+    private var drawer: BallTypeDrawer!
 
     // MARK: - Node layers
     private var hud:          HUD!
@@ -43,6 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupWalls()
         setupAimIndicator()
         setupHUD()
+        setupDrawer()
         loadLevel(levelNumber)
         #if DEBUG
         setupDevControls()
@@ -167,13 +169,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private func setupHUD() {
         hud = HUD()
-        // Push below Dynamic Island / notch using safe area top inset
         let topInset = view?.safeAreaInsets.top ?? 0
         let hudOffset = max(topInset + 36, 60)
         hud.position  = CGPoint(x: 0, y: H / 2 - hudOffset)
         hud.zPosition = 50
-        hud.onBallTypeSelected = { _, _ in }
         addChild(hud)
+    }
+
+    private func setupDrawer() {
+        drawer = BallTypeDrawer(sceneSize: size)
+        drawer.zPosition = 150
+        drawer.onSelect = { [weak self] idx in
+            self?.hud.selectType(at: idx)
+        }
+        addChild(drawer)
     }
 
     // MARK: - Level Loading
@@ -215,6 +224,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hud.configure(level: number, title: levelCfg.title,
                       balls: levelCfg.ballCount, target: levelCfg.targetScore,
                       ballTypes: typeOptions)
+        drawer?.close()
+        drawer?.configure(types: typeOptions, selectedIndex: 0)
 
         // Pegs
         let pattern = PegPattern(rawValue: levelCfg.pegPattern) ?? .classic
@@ -319,7 +330,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func dropBall() {
-        guard canDrop, hud.ballsLeft > 0 else { return }
+        guard canDrop, hud.ballsLeft > 0, drawer?.isOpen != true else { return }
         canDrop = false
 
         let ball = Ball(type: hud.selectedBallType, keyColor: hud.selectedKeyColor)
@@ -702,8 +713,8 @@ extension GameScene {
         if handleDevTap(at: loc) { touchConsumedByUI = true; return }
         #endif
 
-        let hudLoc = convert(loc, to: hud)
-        if hud.handleTap(at: hudLoc) { touchConsumedByUI = true; return }
+        // Drawer intercepts first — pill button or open panel
+        if drawer.handleTap(at: loc) { touchConsumedByUI = true; return }
 
         updateAim(x: loc.x)
     }
