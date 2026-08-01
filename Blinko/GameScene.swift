@@ -45,6 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupAimIndicator()
         setupHUD()
         setupDrawer()
+        setupWaterfalls()
         loadLevel(levelNumber)
         #if DEBUG
         setupDevControls()
@@ -115,14 +116,122 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 path.closeSubpath()
 
                 let node = SKShapeNode(path: path)
-                // Subtle brightness variation per cell
                 let bright = 0.55 + rng.next() * 0.90
                 node.fillColor   = p.fill.withAlphaComponent(0.52 * bright)
                 node.strokeColor = p.mortar.withAlphaComponent(0.85)
                 node.lineWidth   = 1.0
                 node.zPosition   = -10
                 bgLayer.addChild(node)
+
+                // Random crack lines inside some cells
+                if rng.next() < 0.28 {
+                    let cx = (bl.x + br.x + tr.x + tl.x) / 4
+                    let cy = (bl.y + br.y + tr.y + tl.y) / 4
+                    let crackPath = CGMutablePath()
+                    crackPath.move(to: CGPoint(x: cx + rng.next()*cellW*0.3 - cellW*0.15,
+                                               y: cy + rng.next()*cellH*0.3 - cellH*0.15))
+                    crackPath.addLine(to: CGPoint(x: cx + rng.next()*cellW*0.3 - cellW*0.15,
+                                                   y: cy + rng.next()*cellH*0.3 - cellH*0.15))
+                    // Branch
+                    if rng.next() < 0.5 {
+                        crackPath.addLine(to: CGPoint(x: cx + rng.next()*cellW*0.2 - cellW*0.1,
+                                                       y: cy + rng.next()*cellH*0.2 - cellH*0.1))
+                    }
+                    let crack = SKShapeNode(path: crackPath)
+                    crack.strokeColor = p.mortar.withAlphaComponent(0.55)
+                    crack.lineWidth   = 0.8
+                    crack.zPosition   = -9
+                    bgLayer.addChild(crack)
+                }
+
+                // Moss patches on some cells — small green blobs
+                if rng.next() < 0.18 {
+                    let cx = (bl.x + br.x + tr.x + tl.x) / 4
+                    let cy = (bl.y + br.y + tr.y + tl.y) / 4
+                    let mossR = cellW * (0.08 + rng.next() * 0.10)
+                    let moss = SKShapeNode(ellipseOf: CGSize(width: mossR * 2.2, height: mossR))
+                    moss.fillColor   = UIColor(red: 0.12, green: 0.28 + rng.next()*0.14,
+                                               blue: 0.10, alpha: 0.28 + rng.next()*0.18)
+                    moss.strokeColor = .clear
+                    moss.position    = CGPoint(x: cx + rng.next()*cellW*0.2 - cellW*0.1,
+                                               y: cy + rng.next()*cellH*0.2 - cellH*0.1)
+                    moss.zPosition   = -9
+                    bgLayer.addChild(moss)
+                }
             }
+        }
+    }
+
+    // MARK: - Waterfall backdrop
+
+    private var waterfallLayer = SKNode()
+
+    private func setupWaterfalls() {
+        waterfallLayer.zPosition = -5
+        addChild(waterfallLayer)
+
+        let hw = W / 2; let hh = H / 2
+        // 6-9 waterfall streams at random X positions
+        let streamCount = Int.random(in: 6...9)
+        for _ in 0..<streamCount {
+            let x = CGFloat.random(in: -hw * 0.85 ... hw * 0.85)
+            spawnWaterfallStream(x: x, screenHeight: H)
+        }
+    }
+
+    private func spawnWaterfallStream(x: CGFloat, screenHeight: CGFloat) {
+        let hh = screenHeight / 2
+        let streamH = CGFloat.random(in: screenHeight * 0.3 ... screenHeight * 0.8)
+        let width   = CGFloat.random(in: 3...10)
+        let alpha   = CGFloat.random(in: 0.06...0.16)
+        let speed   = Double.random(in: 1.8...4.2)
+
+        // Main streak
+        let streak = SKShapeNode(rectOf: CGSize(width: width, height: streamH), cornerRadius: width/2)
+        streak.fillColor   = UIColor(red: 0.55, green: 0.78, blue: 1.0, alpha: alpha)
+        streak.strokeColor = UIColor(red: 0.75, green: 0.92, blue: 1.0, alpha: alpha * 0.5)
+        streak.lineWidth   = 1
+        streak.position    = CGPoint(x: x, y: hh + streamH / 2)
+        waterfallLayer.addChild(streak)
+
+        // Shimmer highlight inside stream
+        let shimmer = SKShapeNode(rectOf: CGSize(width: max(1, width * 0.3), height: streamH * 0.6),
+                                  cornerRadius: width * 0.15)
+        shimmer.fillColor   = UIColor(white: 1, alpha: alpha * 0.6)
+        shimmer.strokeColor = .clear
+        shimmer.position    = CGPoint(x: x - width * 0.2, y: hh + streamH / 2)
+        waterfallLayer.addChild(shimmer)
+
+        // Animate falling from top to bottom, then reset
+        let totalDist = screenHeight + streamH
+        let fall  = SKAction.moveBy(x: CGFloat.random(in: -6...6),
+                                    y: -totalDist, duration: speed)
+        let reset = SKAction.moveBy(x: 0, y: totalDist, duration: 0)
+        let wait  = SKAction.wait(forDuration: Double.random(in: 0...speed))
+
+        streak.run(SKAction.sequence([wait, SKAction.repeatForever(SKAction.sequence([fall, reset]))]))
+
+        // Fade shimmer in/out independently
+        shimmer.run(SKAction.sequence([
+            SKAction.wait(forDuration: Double.random(in: 0...speed)),
+            SKAction.repeatForever(SKAction.sequence([fall, reset]))
+        ]))
+        shimmer.run(SKAction.repeatForever(SKAction.sequence([
+            SKAction.fadeAlpha(to: alpha * 0.2, duration: Double.random(in: 0.4...0.9)),
+            SKAction.fadeAlpha(to: alpha * 0.8, duration: Double.random(in: 0.4...0.9))
+        ])))
+
+        // Mist pool at bottom — short wide oval
+        if Bool.random() {
+            let mist = SKShapeNode(ellipseOf: CGSize(width: width * 4, height: width * 1.2))
+            mist.fillColor   = UIColor(red: 0.6, green: 0.85, blue: 1.0, alpha: alpha * 0.7)
+            mist.strokeColor = .clear
+            mist.position    = CGPoint(x: x + CGFloat.random(in: -4...4), y: -hh + 20)
+            mist.run(SKAction.repeatForever(SKAction.sequence([
+                SKAction.fadeAlpha(to: alpha * 0.2, duration: Double.random(in: 0.6...1.4)),
+                SKAction.fadeAlpha(to: alpha * 0.9, duration: Double.random(in: 0.6...1.4))
+            ])))
+            waterfallLayer.addChild(mist)
         }
     }
 
@@ -713,8 +822,8 @@ extension GameScene {
         if handleDevTap(at: loc) { touchConsumedByUI = true; return }
         #endif
 
-        // Drawer intercepts first — pill button or open panel
-        if drawer.handleTap(at: loc) { touchConsumedByUI = true; return }
+        // Drawer uses SpriteKit node-name hit testing — reliable on any screen size
+        if drawer.handleNodes(nodes(at: loc)) { touchConsumedByUI = true; return }
 
         updateAim(x: loc.x)
     }

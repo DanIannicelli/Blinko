@@ -51,7 +51,13 @@ class ExperimentsMenuScene: SKScene {
             name:    "worldBall",
             title:   "🪐  World Ball",
             detail:  "Roll between tiny worlds,\neach with its own gravity",
-            yFrac:   -0.22
+            yFrac:   -0.18
+        )
+        makeCard(
+            name:    "megaPlinko",
+            title:   "📏  Mega Plinko",
+            detail:  "20x board, one ball, one goal —\ncamera follows you down",
+            yFrac:   -0.42
         )
 
         let back = SKLabelNode(fontNamed: "AvenirNext-Regular")
@@ -111,6 +117,11 @@ class ExperimentsMenuScene: SKScene {
             go(GravityWellSelectScene(size: size))
         case "worldBall":
             go(WorldBallSelectScene(size: size))
+        case "megaPlinko":
+            let s = MegaPlinkoScene(size: size)
+            s.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            s.scaleMode   = .resizeFill
+            view?.presentScene(s, transition: SKTransition.fade(withDuration: 0.4))
         case "back":
             let menu = MenuScene(size: size)
             menu.anchorPoint = CGPoint(x: 0.5, y: 0.5)
